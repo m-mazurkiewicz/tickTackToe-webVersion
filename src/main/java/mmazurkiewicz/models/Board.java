@@ -61,6 +61,10 @@ public class Board{
         return board.get(x);
     }
 
+    public Mark getMark(int x, int y){
+        return board.get(x).get(y);
+    }
+
     private void playerMove(int x, int y){
         insertSign(x, y);
     }
@@ -109,7 +113,7 @@ public class Board{
     }
 
     public void saveForm(InsertSignForm insertSignForm){
-        playerMove(insertSignForm.getX(), insertSignForm.getY());
+        playerMove(insertSignForm.getX()-1, insertSignForm.getY()-1);
     }
 
     private void changeCurrentPlayer() {

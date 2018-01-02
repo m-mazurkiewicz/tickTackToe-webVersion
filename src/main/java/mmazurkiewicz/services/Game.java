@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-//@Service
+@Service
 public class Game {
     private Board board;
 
@@ -14,7 +14,7 @@ public class Game {
         board = new Board();
     }
 
-    public ArrayList<Mark> getRow(int x){
-        return board.getRow(x);
+    public Board getBoard() {
+        return board;
     }
 }

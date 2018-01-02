@@ -2,6 +2,8 @@ package mmazurkiewicz.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -19,14 +21,20 @@ public class HomePageController {
         }
     };
 
-    @RequestMapping(value="/mainMenu", params="insert", method = RequestMethod.POST)
+    @GetMapping("/")
+    public String mainMenu(Model model) {
+        model.addAttribute("fields",posts);
+        return "menu";
+    }
+
+    @PostMapping(value="/mainMenu", params="insert")
     public String newGame(){
         return "redirect:/insert";
     }
 
-    @RequestMapping("/")
-    public String mainMenu(Model model) {
-        model.addAttribute("fields",posts);
-        return "menu";
+
+    @PostMapping(value="/mainMenu", params="changeDefaultBoardSize")
+    public String changeDefaultBoardSize(){
+        return "redirect:/changeBoardSize";
     }
 }
