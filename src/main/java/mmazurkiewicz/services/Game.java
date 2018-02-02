@@ -1,3 +1,4 @@
+/*
 package mmazurkiewicz.services;
 
 import mmazurkiewicz.models.Board;
@@ -18,3 +19,4 @@ public class Game {
         return board;
     }
 }
+*/

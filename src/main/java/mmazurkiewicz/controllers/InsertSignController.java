@@ -1,8 +1,9 @@
 package mmazurkiewicz.controllers;
 
-import mmazurkiewicz.forms.InsertSignForm;
-import mmazurkiewicz.models.Board;
+//import mmazurkiewicz.forms.InsertSignForm;
+//import mmazurkiewicz.models.Board;
 import mmazurkiewicz.models.Mark;
+import mmazurkiewicz.repositories.RowsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +16,25 @@ import java.util.List;
 
 @Controller
 public class InsertSignController {
-    private Board board;
+//    private Board board;
+//
+//    @Autowired
+//    public InsertSignController(Board board){
+//        this.board = board;
+//    }
 
-    @Autowired
-    public InsertSignController(Board board){
-        this.board = board;
+    private final RowsRepository rowsRepository;
+
+    public InsertSignController(RowsRepository rowsRepository) {
+        this.rowsRepository = rowsRepository;
     }
 
-    @GetMapping("/insert")
+    @GetMapping("/")
+    public void display(){
+        System.out.println(rowsRepository.findById(Long.valueOf(1)).get().getColumns());
+    }
+
+    /*    @GetMapping("/insert")
     public String displayInsertSign(InsertSignForm insertSignForm, Model model, RedirectAttributes redirectAttributes){
         if (board.isGameWin()){
             redirectAttributes.addAttribute("mark", board.getCurrentPlayer());
@@ -58,6 +70,6 @@ public class InsertSignController {
         }
         board.saveForm(insertSignForm);
         return "redirect:/insert";
-    }
+    }*/
 
 }

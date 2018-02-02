@@ -1,3 +1,4 @@
+/*
 package mmazurkiewicz.forms;
 
 import mmazurkiewicz.models.Board;
@@ -37,3 +38,4 @@ public class InsertSignForm {
         this.y = y;
     }
 }
+*/

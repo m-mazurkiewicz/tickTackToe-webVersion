@@ -1,3 +1,4 @@
+/*
 package mmazurkiewicz.controllers;
 
 import mmazurkiewicz.forms.ChangeBoardSizeForm;
@@ -27,3 +28,4 @@ public class ChangeBoardSizeController {
 
 }
 
+*/
