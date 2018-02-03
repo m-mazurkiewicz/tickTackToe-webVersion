@@ -31,9 +31,11 @@ public class InsertSignController {
     }
 
     @GetMapping("/")
-    public void display(Model model){
+    public String display(Model model){
         //System.out.println(rowsRepository.findById(Long.valueOf(1)).get().getColumns());
-        System.out.println(boardService.getBoard().get(1).getColumns());
+        model.addAttribute("board", boardService.getBoard());
+        //System.out.println(boardService.getBoard().get(1).getColumns());
+        return "insertSign";
     }
 
     /*    @GetMapping("/insert")
