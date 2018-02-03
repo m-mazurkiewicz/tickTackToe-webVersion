@@ -14,13 +14,13 @@ import static java.lang.Long.valueOf;
 public class BoardServiceImpl implements BoardService {
 
     private final RowsRepository rowsRepository;
-    private Mark player;
+    private Mark currentPlayer;
     public static final int maxMovesPerGame = 9;
     private int movesCounter;
 
     public BoardServiceImpl(RowsRepository rowsRepository) {
         this.rowsRepository = rowsRepository;
-        this.player = Mark.CIRCLE;
+        this.currentPlayer = Mark.CIRCLE;
         this.movesCounter = 0;
         //maxMovesPerGame = getBoard().size() * getBoard().get(1).getColumns().size();
     }
@@ -41,8 +41,8 @@ public class BoardServiceImpl implements BoardService {
         }
 
         Board2 board2 = optional.get();
-        board2.getColumns().set(columnNumber,player);
-        player = player == Mark.CIRCLE ? Mark.CROSS : Mark.CIRCLE;
+        board2.getColumns().set(columnNumber, currentPlayer);
+        currentPlayer = currentPlayer == Mark.CIRCLE ? Mark.CROSS : Mark.CIRCLE;
         movesCounter++;
         rowsRepository.save(board2);
     }
@@ -50,5 +50,20 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public boolean isBoardFilled() {
         return movesCounter>=maxMovesPerGame;
+    }
+
+    @Override
+    public void changeBoardSize(int rows, int columns) {
+        rowsRepository.deleteAll(); //todo: Zrobić tak, żeby id zaczynało się od 1 po zmianie, albo ewentualnie upewnieć się, że to w niczym nie przeszkadza
+        ArrayList<Board2> board2 = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            ArrayList<Mark> fields = new ArrayList<>();
+            for (int j = 0; j < columns; j++) {
+                fields.add(Mark.EMPTY);
+            }
+            Board2 newRow = new Board2(fields);
+            board2.add(newRow);
+        }
+        rowsRepository.saveAll(board2);
     }
 }

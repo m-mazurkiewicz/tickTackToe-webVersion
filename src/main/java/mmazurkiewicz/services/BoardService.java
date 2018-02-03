@@ -5,7 +5,8 @@ import mmazurkiewicz.models.Board2;
 import java.util.ArrayList;
 
 public interface BoardService {
-    public ArrayList<Board2> getBoard();
-    public void insertSign(int rowNumber, int columnNumber);
-    public boolean isBoardFilled();
+    ArrayList<Board2> getBoard();
+    void insertSign(int rowNumber, int columnNumber);
+    boolean isBoardFilled();
+    void changeBoardSize(int rows, int columns);
 }

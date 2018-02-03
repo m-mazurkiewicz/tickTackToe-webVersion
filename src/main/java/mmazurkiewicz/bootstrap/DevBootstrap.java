@@ -27,7 +27,6 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     private Board2 getRows(){
-        //List<Board2> board = new ArrayList<>();
 
         ArrayList<Mark> fields = new ArrayList<>();
         fields.add(Mark.EMPTY);

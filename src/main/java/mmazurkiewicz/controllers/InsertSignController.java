@@ -24,7 +24,13 @@ public class InsertSignController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/change/{row}/{column}")
+    public String changeSize(@PathVariable int row, @PathVariable int column){
+        boardService.changeBoardSize(row, column);
+        return "redirect:/insert";
+    }
+
+    @GetMapping("/insert")
     public String display(Model model){
         model.addAttribute("board", boardService.getBoard());
         return "insertSign";
@@ -36,7 +42,7 @@ public class InsertSignController {
         if (boardService.isBoardFilled()){
             return "redirect:/gameOver";
         }
-        return "redirect:/";
+        return "redirect:/insert";
     }
 
     /*    @GetMapping("/insert")
