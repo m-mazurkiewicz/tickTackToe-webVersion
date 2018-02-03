@@ -29,7 +29,9 @@
                     <div class="table-responsive" th:if="${not #lists.isEmpty(board)}">
                         <table class="table table-hover" th:each="row: ${board}">
                             <tr>
-                                <td class="center" th:each="field : ${row.getColumns()}" th:text="${field.getMark()}"></td>
+                                <td class="center" th:each="field : ${row.getColumns()}">
+                                    <button type="submit" class="btn btn-primary" th:text="${field.getMark()}"></button>
+                                </td>
                             </tr>
                         </table>
                     </div>
