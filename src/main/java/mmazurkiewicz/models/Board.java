@@ -57,7 +57,7 @@
 //        return sizeY;
 //    }
 //
-//    public ArrayList<Mark> getRow(int x){
+//    public ArrayList<Mark> getRowNumber(int x){
 //        return board.get(x);
 //    }
 //

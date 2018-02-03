@@ -11,23 +11,23 @@ public class Board2 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long row;
+    private Long rowNumber;
 
     private ArrayList<Mark> columns;
 
     public Board2() {
     }
 
-    public Board2(ArrayList<Mark> row) {
-        this.columns = row;
+    public Board2(ArrayList<Mark> rowNumber) {
+        this.columns = rowNumber;
     }
 
-    public Long getRow() {
-        return row;
+    public Long getRowNumber() {
+        return rowNumber;
     }
 
-    public void setRow(Long row) {
-        this.row = row;
+    public void setRowNumber(Long rowNumber) {
+        this.rowNumber = rowNumber;
     }
 
     public ArrayList<Mark> getColumns() {

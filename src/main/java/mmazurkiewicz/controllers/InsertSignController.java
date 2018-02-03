@@ -34,8 +34,13 @@ public class InsertSignController {
     public String display(Model model){
         //System.out.println(rowsRepository.findById(Long.valueOf(1)).get().getColumns());
         model.addAttribute("board", boardService.getBoard());
-        //System.out.println(boardService.getBoard().get(1).getColumns());
         return "insertSign";
+    }
+
+    @GetMapping("/insert/{rowNumber}/{columnNumber}")
+    public String insertSign(@PathVariable int rowNumber, @PathVariable int columnNumber){
+        boardService.insertSign(rowNumber, columnNumber);
+        return "redirect:/";
     }
 
     /*    @GetMapping("/insert")

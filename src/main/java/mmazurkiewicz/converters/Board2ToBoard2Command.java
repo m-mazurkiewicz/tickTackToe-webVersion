@@ -19,7 +19,7 @@ public class Board2ToBoard2Command implements Converter<Board2, Board2Command> {
         }
 
         final Board2Command command = new Board2Command();
-        command.setRow(rows.getRow());
+        command.setRow(rows.getRowNumber());
         command.setColumns(rows.getColumns());
         return command;
     }

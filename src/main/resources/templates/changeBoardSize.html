@@ -13,12 +13,12 @@
     <div class="columns">
         <form th:action="@{/changeBoardSize}" th:object="${changeBoardSizeForm}" method="post" class="col m4 s12 offset-m4">
             <div class="input-field columns s12">
-                <input th:field="${changeBoardSizeForm.x}" row="x" type="text" required="required" th:errorclass="invalid"/>
+                <input th:field="${changeBoardSizeForm.x}" rowNumber="x" type="text" required="required" th:errorclass="invalid"/>
                 <label for="x" th:text="|Ilość wierszy|">Ilość wierszy</label>
                 <div th:errors="*{x}" class="red-text">Błąd</div>
             </div>
             <div class="input-field columns s12">
-                <input th:field="${changeBoardSizeForm.y}" row="y" type="text" required="required" th:errorclass="invalid"/>
+                <input th:field="${changeBoardSizeForm.y}" rowNumber="y" type="text" required="required" th:errorclass="invalid"/>
                 <label for="y" th:text="|Ilość kolumn|">Ilość kolumn</label>
                 <div th:errors="*{y}" class="red-text">Błąd</div>
             </div>

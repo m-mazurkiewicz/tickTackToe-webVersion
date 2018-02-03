@@ -18,7 +18,7 @@
 <body>
 
 <div class="container-fluid" style="margin-top: 20px">
-    <div class="row">
+    <div class="rowNumber">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -27,10 +27,10 @@
 
                 <div class="panel-body">
                     <div class="table-responsive" th:if="${not #lists.isEmpty(board)}">
-                        <table class="table table-hover" th:each="row: ${board}">
+                        <table class="table table-hover" th:each="rowNumber: ${board}">
                             <tr>
-                                <td class="center" th:each="field : ${row.getColumns()}">
-                                    <button type="submit" class="btn btn-primary" th:text="${field.getMark()}"></button>
+                                <td class="center" th:each="field,iterStat : ${rowNumber.getColumns()}">
+                                    <a role="button" th:href="@{'/insert/' + ${board.indexOf(rowNumber) + 1} + '/' + ${iterStat.index} + '/'}" class="btn btn-primary" th:text="${field.getMark()}"></a>
                                 </td>
                             </tr>
                         </table>
@@ -60,12 +60,12 @@
     <!--<div class="columns">-->
         <!--<form th:action="@{/insert}" th:object="${insertSignForm}" method="post" class="col m4 s12 offset-m4">-->
             <!--<div class="input-field columns s12">-->
-                <!--<input th:field="${insertSignForm.x}" row="x" type="text" required="required" th:errorclass="invalid"/>-->
+                <!--<input th:field="${insertSignForm.x}" rowNumber="x" type="text" required="required" th:errorclass="invalid"/>-->
                 <!--<label for="x" th:text="Wiersz">Wiersz</label>-->
                 <!--<div th:errors="*{x}" class="red-text">Błąd</div>-->
             <!--</div>-->
             <!--<div class="input-field columns s12">-->
-                <!--<input th:field="${insertSignForm.y}" row="y" type="text" required="required" th:errorclass="invalid"/>-->
+                <!--<input th:field="${insertSignForm.y}" rowNumber="y" type="text" required="required" th:errorclass="invalid"/>-->
                 <!--<label for="y" th:text="Kolumna">Kolumna</label>-->
                 <!--<div th:errors="*{y}" class="red-text">Błąd</div>-->
             <!--</div>-->
@@ -82,7 +82,7 @@
     <!--<div class="columns">-->
         <!--<table class="col m4 s12 offset-m4" th:action="@{/displayBoard}" th:each="rowNumber: ${#numbers.sequence(0,board.getSizeX()-1)}">-->
             <!--<tr>-->
-                <!--<td class="center" th:each="field : ${board.getRow(rowNumber)}" th:text="${field.getMark()}"></td>-->
+                <!--<td class="center" th:each="field : ${board.getRowNumber(rowNumber)}" th:text="${field.getMark()}"></td>-->
             <!--</tr>-->
         <!--</table>-->
     <!--</div>-->
