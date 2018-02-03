@@ -4,6 +4,7 @@ package mmazurkiewicz.controllers;
 //import mmazurkiewicz.models.Board;
 import mmazurkiewicz.models.Mark;
 import mmazurkiewicz.repositories.RowsRepository;
+import mmazurkiewicz.services.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,15 +24,16 @@ public class InsertSignController {
 //        this.board = board;
 //    }
 
-    private final RowsRepository rowsRepository;
+    private final BoardService boardService;
 
-    public InsertSignController(RowsRepository rowsRepository) {
-        this.rowsRepository = rowsRepository;
+    public InsertSignController(BoardService boardService) {
+        this.boardService = boardService;
     }
 
     @GetMapping("/")
-    public void display(){
-        System.out.println(rowsRepository.findById(Long.valueOf(1)).get().getColumns());
+    public void display(Model model){
+        //System.out.println(rowsRepository.findById(Long.valueOf(1)).get().getColumns());
+        System.out.println(boardService.getBoard().get(1).getColumns());
     }
 
     /*    @GetMapping("/insert")
