@@ -17,12 +17,6 @@ import java.util.List;
 
 @Controller
 public class InsertSignController {
-//    private Board board;
-//
-//    @Autowired
-//    public InsertSignController(Board board){
-//        this.board = board;
-//    }
 
     private final BoardService boardService;
 
@@ -32,7 +26,6 @@ public class InsertSignController {
 
     @GetMapping("/")
     public String display(Model model){
-        //System.out.println(rowsRepository.findById(Long.valueOf(1)).get().getColumns());
         model.addAttribute("board", boardService.getBoard());
         return "insertSign";
     }
@@ -40,6 +33,9 @@ public class InsertSignController {
     @GetMapping("/insert/{rowNumber}/{columnNumber}")
     public String insertSign(@PathVariable int rowNumber, @PathVariable int columnNumber){
         boardService.insertSign(rowNumber, columnNumber);
+        if (boardService.isBoardFilled()){
+            return "redirect:/gameOver";
+        }
         return "redirect:/";
     }
 

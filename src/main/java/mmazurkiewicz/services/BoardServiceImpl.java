@@ -14,11 +14,15 @@ import static java.lang.Long.valueOf;
 public class BoardServiceImpl implements BoardService {
 
     private final RowsRepository rowsRepository;
-    Mark player;
+    private Mark player;
+    public static final int maxMovesPerGame = 9;
+    private int movesCounter;
 
     public BoardServiceImpl(RowsRepository rowsRepository) {
         this.rowsRepository = rowsRepository;
         this.player = Mark.CIRCLE;
+        this.movesCounter = 0;
+        //maxMovesPerGame = getBoard().size() * getBoard().get(1).getColumns().size();
     }
 
     @Override
@@ -39,6 +43,12 @@ public class BoardServiceImpl implements BoardService {
         Board2 board2 = optional.get();
         board2.getColumns().set(columnNumber,player);
         player = player == Mark.CIRCLE ? Mark.CROSS : Mark.CIRCLE;
+        movesCounter++;
         rowsRepository.save(board2);
+    }
+
+    @Override
+    public boolean isBoardFilled() {
+        return movesCounter>=maxMovesPerGame;
     }
 }
