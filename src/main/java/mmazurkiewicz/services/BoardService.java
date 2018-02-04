@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface BoardService {
     ArrayList<Board> getBoard();
-    void insertSign(int rowNumber, int columnNumber);
+    boolean insertSign(int rowNumber, int columnNumber);
     boolean isBoardFilled();
     void changeBoardSize(int rows, int columns);
     void changeCurrentPlayer();

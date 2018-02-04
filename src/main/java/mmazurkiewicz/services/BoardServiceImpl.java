@@ -39,7 +39,11 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void insertSign(int rowNumber, int columnNumber) {
+    public boolean insertSign(int rowNumber, int columnNumber) {
+        if (!isFieldEmpty(rowNumber, columnNumber)){
+            return false;
+        }
+
         rowNumber = rowNumber + idOfFirstRow - 1;
         Optional<Board> optional = rowsRepository.findById(valueOf(rowNumber));
 
@@ -51,11 +55,13 @@ public class BoardServiceImpl implements BoardService {
         board.getColumns().set(columnNumber, currentPlayer);
         movesCounter++;
         rowsRepository.save(board);
+
+        return true;
     }
 
     @Override
     public boolean isBoardFilled() {
-        return movesCounter>=maxMovesPerGame;
+        return movesCounter >= maxMovesPerGame;
     }
 
     @Override
@@ -86,6 +92,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Mark getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    private boolean isFieldEmpty(int rowNumber, int columnNumber){
+        return isPlayerMarkEqualToInserted(rowNumber, columnNumber, Mark.EMPTY);
     }
 
     private boolean isPlayerMarkEqualToInserted(int rowNumber, int columnNumber, Mark player) {
