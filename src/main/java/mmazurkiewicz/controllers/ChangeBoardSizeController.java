@@ -1,4 +1,3 @@
-/*
 package mmazurkiewicz.controllers;
 
 import mmazurkiewicz.forms.ChangeBoardSizeForm;
@@ -23,9 +22,8 @@ public class ChangeBoardSizeController {
         if (bindingResult.hasErrors()){
             return "changeBoardSize";
         }
-        return "redirect:/insert/"+changeBoardSizeForm.getX()+","+changeBoardSizeForm.getY();
+        return "redirect:/changeSize/"+changeBoardSizeForm.getX()+"/"+changeBoardSizeForm.getY();
     }
 
 }
 
-*/

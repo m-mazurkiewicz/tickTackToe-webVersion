@@ -1,4 +1,3 @@
-/*
 package mmazurkiewicz.forms;
 
 import javax.validation.constraints.Min;
@@ -32,4 +31,3 @@ public class ChangeBoardSizeForm {
         this.y = y;
     }
 }
-*/

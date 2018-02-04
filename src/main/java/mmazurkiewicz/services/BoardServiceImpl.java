@@ -19,6 +19,7 @@ public class BoardServiceImpl implements BoardService {
     private int movesCounter;
     private int numberOfRows;
     private int numberOfColumns;
+    private int idOfFirstRow;
 
     public BoardServiceImpl(RowsRepository rowsRepository) {
         this.rowsRepository = rowsRepository;
@@ -38,6 +39,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void insertSign(int rowNumber, int columnNumber) {
+        rowNumber = rowNumber + idOfFirstRow - 1;
         Optional<Board2> optional = rowsRepository.findById(valueOf(rowNumber));
 
         if (!optional.isPresent()){
@@ -57,7 +59,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void changeBoardSize(int rows, int columns) {
-        rowsRepository.deleteAll(); //todo: Zrobić tak, żeby id zaczynało się od 1 po zmianie, albo ewentualnie upewnieć się, że to w niczym nie przeszkadza
+        rowsRepository.deleteAll();
         ArrayList<Board2> board2 = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             ArrayList<Mark> fields = new ArrayList<>();
@@ -68,6 +70,11 @@ public class BoardServiceImpl implements BoardService {
             board2.add(newRow);
         }
         rowsRepository.saveAll(board2);
+
+        idOfFirstRow = 4;   //todo: umożliwić więcej zmian rozmiaru planszy (zaimplementować to lepiej)
+        numberOfRows = rows;
+        numberOfColumns = columns;
+        maxMovesPerGame = rows * columns;
     }
 
     @Override
@@ -81,6 +88,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     private boolean isPlayerMarkEqualToInserted(int rowNumber, int columnNumber, Mark player) {
+        rowNumber = rowNumber + idOfFirstRow - 1;
         Optional<Board2> optional = rowsRepository.findById(valueOf(rowNumber));
 
         if (!optional.isPresent()){

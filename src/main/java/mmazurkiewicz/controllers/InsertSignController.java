@@ -24,7 +24,7 @@ public class InsertSignController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/change/{row}/{column}")
+    @GetMapping("/changeSize/{row}/{column}")
     public String changeSize(@PathVariable int row, @PathVariable int column){
         boardService.changeBoardSize(row, column);
         return "redirect:/insert";
