@@ -39,9 +39,16 @@ public class InsertSignController {
     @GetMapping("/insert/{rowNumber}/{columnNumber}")
     public String insertSign(@PathVariable int rowNumber, @PathVariable int columnNumber){
         boardService.insertSign(rowNumber, columnNumber);
+
         if (boardService.isBoardFilled()){
             return "redirect:/gameOver";
         }
+
+        if (boardService.checkIfWin(rowNumber, columnNumber)){
+            return "redirect:/win/" + boardService.getCurrentPlayer().toString();
+        }
+
+        boardService.changeCurrentPlayer();
         return "redirect:/insert";
     }
 

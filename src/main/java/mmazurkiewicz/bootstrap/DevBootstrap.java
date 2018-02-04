@@ -33,10 +33,6 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         fields.add(Mark.EMPTY);
         fields.add(Mark.EMPTY);
         Board2 rows = new Board2(fields);
-        int i;
-        //for (i = 0; i<=2; i++){
-        //    board.add(rows);
-        //}
         return rows;
     }
 }
