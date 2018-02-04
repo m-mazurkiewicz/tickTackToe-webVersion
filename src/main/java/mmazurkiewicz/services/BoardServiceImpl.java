@@ -1,6 +1,6 @@
 package mmazurkiewicz.services;
 
-import mmazurkiewicz.models.Board2;
+import mmazurkiewicz.models.Board;
 import mmazurkiewicz.models.Mark;
 import mmazurkiewicz.repositories.RowsRepository;
 import org.springframework.stereotype.Service;
@@ -28,11 +28,12 @@ public class BoardServiceImpl implements BoardService {
         this.numberOfRows = 3;//getBoard().size();
         this.numberOfColumns = 3;//getBoard().get(1).getColumns().size();
         this.maxMovesPerGame = numberOfRows * numberOfColumns;
+        this.idOfFirstRow = 1;
     }
 
     @Override
-    public ArrayList<Board2> getBoard() {
-        ArrayList<Board2> board = new ArrayList<>();
+    public ArrayList<Board> getBoard() {
+        ArrayList<Board> board = new ArrayList<>();
         rowsRepository.findAll().iterator().forEachRemaining(board::add);
         return board;
     }
@@ -40,16 +41,16 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void insertSign(int rowNumber, int columnNumber) {
         rowNumber = rowNumber + idOfFirstRow - 1;
-        Optional<Board2> optional = rowsRepository.findById(valueOf(rowNumber));
+        Optional<Board> optional = rowsRepository.findById(valueOf(rowNumber));
 
         if (!optional.isPresent()){
             throw new RuntimeException("Field is not present");
         }
 
-        Board2 board2 = optional.get();
-        board2.getColumns().set(columnNumber, currentPlayer);
+        Board board = optional.get();
+        board.getColumns().set(columnNumber, currentPlayer);
         movesCounter++;
-        rowsRepository.save(board2);
+        rowsRepository.save(board);
     }
 
     @Override
@@ -60,16 +61,16 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void changeBoardSize(int rows, int columns) {
         rowsRepository.deleteAll();
-        ArrayList<Board2> board2 = new ArrayList<>();
+        ArrayList<Board> board = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             ArrayList<Mark> fields = new ArrayList<>();
             for (int j = 0; j < columns; j++) {
                 fields.add(Mark.EMPTY);
             }
-            Board2 newRow = new Board2(fields);
-            board2.add(newRow);
+            Board newRow = new Board(fields);
+            board.add(newRow);
         }
-        rowsRepository.saveAll(board2);
+        rowsRepository.saveAll(board);
 
         idOfFirstRow = 4;   //todo: umożliwić więcej zmian rozmiaru planszy (zaimplementować to lepiej)
         numberOfRows = rows;
@@ -89,15 +90,15 @@ public class BoardServiceImpl implements BoardService {
 
     private boolean isPlayerMarkEqualToInserted(int rowNumber, int columnNumber, Mark player) {
         rowNumber = rowNumber + idOfFirstRow - 1;
-        Optional<Board2> optional = rowsRepository.findById(valueOf(rowNumber));
+        Optional<Board> optional = rowsRepository.findById(valueOf(rowNumber));
 
         if (!optional.isPresent()){
             throw new RuntimeException("Field is not present");
         }
 
-        Board2 board2 = optional.get();
+        Board board = optional.get();
 
-        return board2.getColumns().get(columnNumber) == player;
+        return board.getColumns().get(columnNumber) == player;
     }
 
     private boolean checkIfRowHasWinningCombination(int rowNumber, int columnNumber) {

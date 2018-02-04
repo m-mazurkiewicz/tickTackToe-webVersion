@@ -1,14 +1,13 @@
 package mmazurkiewicz.bootstrap;
 
 import mmazurkiewicz.models.Mark;
-import mmazurkiewicz.models.Board2;
+import mmazurkiewicz.models.Board;
 import mmazurkiewicz.repositories.RowsRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> {
@@ -26,13 +25,13 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         }
     }
 
-    private Board2 getRows(){
+    private Board getRows(){
 
         ArrayList<Mark> fields = new ArrayList<>();
         fields.add(Mark.EMPTY);
         fields.add(Mark.EMPTY);
         fields.add(Mark.EMPTY);
-        Board2 rows = new Board2(fields);
+        Board rows = new Board(fields);
         return rows;
     }
 }

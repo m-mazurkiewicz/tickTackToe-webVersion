@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 @Component
-public class Board2Command {
+public class BoardCommand {
 
     private Long row;
     private ArrayList<Mark> columns = new ArrayList<>();

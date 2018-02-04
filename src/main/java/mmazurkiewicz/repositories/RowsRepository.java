@@ -1,7 +1,7 @@
 package mmazurkiewicz.repositories;
 
-import mmazurkiewicz.models.Board2;
+import mmazurkiewicz.models.Board;
 import org.springframework.data.repository.CrudRepository;
 
-public interface RowsRepository extends CrudRepository<Board2, Long> {
+public interface RowsRepository extends CrudRepository<Board, Long> {
 }
