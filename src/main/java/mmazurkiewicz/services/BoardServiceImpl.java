@@ -78,7 +78,7 @@ public class BoardServiceImpl implements BoardService {
         }
         rowsRepository.saveAll(board);
 
-        idOfFirstRow = 4;   //todo: umożliwić więcej zmian rozmiaru planszy (zaimplementować to lepiej)
+        idOfFirstRow = idOfFirstRow + numberOfRows;   //todo: ewentualnie zaimplementować to lepiej
         numberOfRows = rows;
         numberOfColumns = columns;
         maxMovesPerGame = rows * columns;

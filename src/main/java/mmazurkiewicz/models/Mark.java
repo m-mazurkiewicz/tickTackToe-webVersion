@@ -3,7 +3,7 @@ package mmazurkiewicz.models;
 public enum Mark {
     CIRCLE('o'),
     CROSS('x'),
-    EMPTY('_');
+    EMPTY('?');
 
     private char mark;
 
