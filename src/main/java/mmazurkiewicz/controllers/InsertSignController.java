@@ -14,12 +14,6 @@ public class InsertSignController {
         this.boardService = boardService;
     }
 
-    @GetMapping("/changeSize/{row}/{column}")
-    public String changeSize(@PathVariable int row, @PathVariable int column){
-        boardService.changeBoardSize(row, column);
-        return "redirect:/insert";
-    }
-
     @GetMapping("/insert")
     public String display(Model model){
         model.addAttribute("board", boardService.getBoard());

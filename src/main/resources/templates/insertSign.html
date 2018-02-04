@@ -22,8 +22,15 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h1 class="panel-title">Naciśnij na pole, gdzie chcesz postawić swój znak</h1>
-                    <h2 class="panel-title" th:text="'Kolej gracza ' + ${player}"/>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <h1 class="panel-title">Naciśnij na pole, gdzie chcesz postawić swój znak</h1>
+                            <h2 class="panel-title" th:text="'Kolej gracza ' + ${player}"/>
+                        </div>
+                        <div class="col-md-3">
+                            <a class="btn btn-default" href="/" role="button">Wróć do menu</a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="panel-body">
