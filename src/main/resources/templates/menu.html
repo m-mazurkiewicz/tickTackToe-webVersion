@@ -12,8 +12,14 @@
     <form method="post" action="mainMenu" class="indigo-text center">
         <div class="columns">
             <!--<li>-->
-                <div class="columns s12">
-                    <button class="btn waves-effect waves-light" type="submit" name="insert" value="Nowa standardowa gra" th:text="|Nowa gra|"/>
+                <div class="columns s12" th:if="${not isGameStarted}">
+                    <button class="btn waves-effect waves-light" type="submit" name="insert" value="Nowa gra" th:text="|Nowa gra|"/>
+                </div>
+                <div class="columns s12" th:if="${isGameStarted}">
+                    <button class="btn waves-effect waves-light" type="submit" name="insert" value="Wznów grę" th:text="|Wznów grę|"/>
+                </div>
+                <div class="columns s12" th:if="${isGameStarted}">
+                    <button class="btn waves-effect waves-light" type="submit" name="restartGame" value="Zacznij od początku" th:text="|Zacznij od początku|"/>
                 </div>
             <!--</li>-->
             <!--<li>-->

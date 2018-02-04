@@ -82,6 +82,8 @@ public class BoardServiceImpl implements BoardService {
         numberOfRows = rows;
         numberOfColumns = columns;
         maxMovesPerGame = rows * columns;
+        this.currentPlayer = Mark.CIRCLE;
+        this.movesCounter = 0;
     }
 
     @Override
@@ -92,6 +94,21 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Mark getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    @Override
+    public int getMovesCounter() {
+        return movesCounter;
+    }
+
+    @Override
+    public int getNumberOfRows() {
+        return numberOfRows;
+    }
+
+    @Override
+    public int getNumberOfColumns() {
+        return numberOfColumns;
     }
 
     private boolean isFieldEmpty(int rowNumber, int columnNumber){

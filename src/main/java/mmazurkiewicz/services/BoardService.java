@@ -13,4 +13,7 @@ public interface BoardService {
     void changeCurrentPlayer();
     boolean checkIfWin(int rowNumber, int columnNumber);
     Mark getCurrentPlayer();
+    int getMovesCounter();
+    int getNumberOfRows();
+    int getNumberOfColumns();
 }

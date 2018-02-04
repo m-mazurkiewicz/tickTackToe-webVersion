@@ -38,5 +38,11 @@ public class ChangeBoardSizeController {
         boardService.changeBoardSize(row, column);
         return "redirect:/";
     }
+
+    @GetMapping("/restart")
+    public String restartGame(){
+        boardService.changeBoardSize(boardService.getNumberOfRows(), boardService.getNumberOfColumns());
+        return "redirect:/insert";
+    }
 }
 
