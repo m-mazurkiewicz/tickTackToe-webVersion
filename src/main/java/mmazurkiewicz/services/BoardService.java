@@ -16,4 +16,5 @@ public interface BoardService {
     int getMovesCounter();
     int getNumberOfRows();
     int getNumberOfColumns();
+    boolean isGameOver();
 }

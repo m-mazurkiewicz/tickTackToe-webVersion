@@ -20,6 +20,7 @@ public class BoardServiceImpl implements BoardService {
     private int numberOfRows;
     private int numberOfColumns;
     private int idOfFirstRow;
+    private boolean gameWon;
 
     public BoardServiceImpl(RowsRepository rowsRepository) {
         this.rowsRepository = rowsRepository;
@@ -29,6 +30,7 @@ public class BoardServiceImpl implements BoardService {
         this.numberOfColumns = 3;//getBoard().get(1).getColumns().size();
         this.maxMovesPerGame = numberOfRows * numberOfColumns;
         this.idOfFirstRow = 1;
+        this.gameWon = false;
     }
 
     @Override
@@ -82,8 +84,9 @@ public class BoardServiceImpl implements BoardService {
         numberOfRows = rows;
         numberOfColumns = columns;
         maxMovesPerGame = rows * columns;
-        this.currentPlayer = Mark.CIRCLE;
-        this.movesCounter = 0;
+        currentPlayer = Mark.CIRCLE;
+        movesCounter = 0;
+        gameWon = false;
     }
 
     @Override
@@ -111,6 +114,11 @@ public class BoardServiceImpl implements BoardService {
         return numberOfColumns;
     }
 
+    @Override
+    public boolean isGameOver() {
+        return gameWon || isBoardFilled();
+    }
+
     private boolean isFieldEmpty(int rowNumber, int columnNumber){
         return isPlayerMarkEqualToInserted(rowNumber, columnNumber, Mark.EMPTY);
     }
@@ -130,7 +138,7 @@ public class BoardServiceImpl implements BoardService {
 
     private boolean checkIfRowHasWinningCombination(int rowNumber, int columnNumber) {
         return checkIfTwoFieldsHaveTheSameMarkAsInserted(rowNumber , columnNumber - 1, rowNumber, columnNumber - 2 )
-                || checkIfTwoFieldsHaveTheSameMarkAsInserted(rowNumber, columnNumber - 1, rowNumber, columnNumber - 2)
+                || checkIfTwoFieldsHaveTheSameMarkAsInserted(rowNumber, columnNumber - 1, rowNumber, columnNumber + 1)
                 || checkIfTwoFieldsHaveTheSameMarkAsInserted(rowNumber, columnNumber + 1, rowNumber, columnNumber + 2);
     }
 
@@ -171,9 +179,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     public boolean checkIfWin(int x, int y) {
-        return checkIfRowHasWinningCombination(x, y)
+        if (checkIfRowHasWinningCombination(x, y)
                 || checkIfColumnHasWinningCombination(x, y)
                 || checkIf1stDiagonalHasWinningCombination(x, y)
-                || checkIf2ndDiagonalHasWinningCombination(x, y);
+                || checkIf2ndDiagonalHasWinningCombination(x, y)){
+            gameWon = true;
+            return true;
+        }
+        return false;
     }
 }

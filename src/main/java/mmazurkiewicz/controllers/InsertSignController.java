@@ -23,6 +23,10 @@ public class InsertSignController {
 
     @GetMapping("/insert/{rowNumber}/{columnNumber}")
     public String insertSign(@PathVariable int rowNumber, @PathVariable int columnNumber){
+        if (boardService.isGameOver()){
+            return "redirect:/noMoreMoves";
+        }
+
         if (!boardService.insertSign(rowNumber, columnNumber)){
             return "redirect:/insert";
         }
