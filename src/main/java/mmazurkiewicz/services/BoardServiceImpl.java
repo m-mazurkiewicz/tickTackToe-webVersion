@@ -1,6 +1,7 @@
 package mmazurkiewicz.services;
 
 import mmazurkiewicz.models.Board;
+import mmazurkiewicz.models.Game;
 import mmazurkiewicz.models.Mark;
 import mmazurkiewicz.repositories.RowsRepository;
 import org.springframework.stereotype.Service;
@@ -117,6 +118,17 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public boolean isGameOver() {
         return gameWon || isBoardFilled();
+    }
+
+    @Override
+    public void loadBoard(Game game) {
+        idOfFirstRow = idOfFirstRow + numberOfRows;   //todo: ewentualnie zaimplementować to lepiej
+        numberOfRows = game.getNumberOfRows();
+        numberOfColumns = game.getNumberOfColumns();
+        maxMovesPerGame = numberOfRows * numberOfColumns;
+        currentPlayer = game.getCurrentPlayer();
+        movesCounter = game.getMovesCounter();
+        gameWon = false;
     }
 
     private boolean isFieldEmpty(int rowNumber, int columnNumber){

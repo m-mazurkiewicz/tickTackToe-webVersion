@@ -3,9 +3,11 @@ package mmazurkiewicz.services;
 import mmazurkiewicz.models.Game;
 import mmazurkiewicz.models.Mark;
 import mmazurkiewicz.repositories.GamesRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class GameServiceImpl implements GameService {
 
     private final GamesRepository gamesRepository;
@@ -41,13 +43,13 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void loadGame(Long id) {
+    public Game loadGame(Long id) {
         Optional<Game> optional = gamesRepository.findById(id);
 
         if (!optional.isPresent()){
             throw new RuntimeException("Field is not present");
         }
 
-        Game game = optional.get();
+        return optional.get();
     }
 }
