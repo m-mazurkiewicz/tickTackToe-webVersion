@@ -15,6 +15,7 @@ public class Game {
     private int numberOfColumns;
     private int movesCounter;
     private Mark currentPlayer;
+    private Long idOfFirstRow;
 
     public Long getGameNumber() {
         return gameNumber;
@@ -54,5 +55,13 @@ public class Game {
 
     public void setCurrentPlayer(Mark currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    public Long getIdOfFirstRow() {
+        return idOfFirstRow;
+    }
+
+    public void setIdOfFirstRow(Long idOfFirstRow) {
+        this.idOfFirstRow = idOfFirstRow;
     }
 }

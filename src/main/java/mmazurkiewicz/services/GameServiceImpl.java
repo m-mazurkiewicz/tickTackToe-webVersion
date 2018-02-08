@@ -11,6 +11,7 @@ import java.util.Optional;
 public class GameServiceImpl implements GameService {
 
     private final GamesRepository gamesRepository;
+    private Long currentGame;
 
     public GameServiceImpl(GamesRepository gamesRepository) {
         this.gamesRepository = gamesRepository;
@@ -24,11 +25,12 @@ public class GameServiceImpl implements GameService {
         game.setNumberOfColumns(numberOfColumns);
 
         gamesRepository.save(game);
+        //gamesRepository.findAll().iterator().forEachRemaining();
     }
 
     @Override
     public void saveGame(Long id, int movesCounter, Mark currentPlayer) {
-            Optional<Game> optional = gamesRepository.findById(id);
+        Optional<Game> optional = gamesRepository.findById(id);  //todo: zastanowić się, czy nie zrobić tak, żeby nie trzeba było podawać ID, tylko szło z current game
 
         if (!optional.isPresent()){
             throw new RuntimeException("Field is not present");
@@ -36,6 +38,7 @@ public class GameServiceImpl implements GameService {
 
         Game game = optional.get();
 
+        currentGame = id;
         game.setCurrentPlayer(currentPlayer);
         game.setMovesCounter(movesCounter);
 

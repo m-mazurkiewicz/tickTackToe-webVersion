@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.lang.Long.valueOf;
 
@@ -15,6 +16,7 @@ import static java.lang.Long.valueOf;
 public class BoardServiceImpl implements BoardService {
 
     private final RowsRepository rowsRepository;
+    private final GameService gameService;
     private Mark currentPlayer;
     private int maxMovesPerGame;
     private int movesCounter;
@@ -23,8 +25,9 @@ public class BoardServiceImpl implements BoardService {
     private int idOfFirstRow;
     private boolean gameWon;
 
-    public BoardServiceImpl(RowsRepository rowsRepository) {
+    public BoardServiceImpl(RowsRepository rowsRepository, GameService gameService) {
         this.rowsRepository = rowsRepository;
+        this.gameService = gameService;
         this.currentPlayer = Mark.CIRCLE;
         this.movesCounter = 0;
         this.numberOfRows = 3;//getBoard().size();
@@ -32,12 +35,18 @@ public class BoardServiceImpl implements BoardService {
         this.maxMovesPerGame = numberOfRows * numberOfColumns;
         this.idOfFirstRow = 1;
         this.gameWon = false;
+        //gameService.newGame(numberOfRows, numberOfColumns, );
     }
 
     @Override
     public ArrayList<Board> getBoard() {
         ArrayList<Board> board = new ArrayList<>();
+        //rowsRepository.findAllById();
         rowsRepository.findAll().iterator().forEachRemaining(board::add);
+        board.stream()
+                .filter(u -> u.getRowNumber() >= idOfFirstRow & u.getRowNumber() <= idOfFirstRow + numberOfRows)
+                .collect(Collectors.toList());
+       // board.stream().sorted((a, b) -> b.getRowNumber().compareTo(a.getRowNumber())).sorted().
         return board;
     }
 
