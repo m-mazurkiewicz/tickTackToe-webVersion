@@ -37,7 +37,7 @@ public class HomePageController {
 
     @PostMapping(value="/mainMenu", params="insert")
     public String newGame(){
-        return "redirect:/insert";
+        return "redirect:/newGame";
     }
 
     @PostMapping(value="/mainMenu", params="restartGame")

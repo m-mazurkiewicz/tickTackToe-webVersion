@@ -22,6 +22,13 @@ public class GameController {
         this.boardService = boardService;
     }
 
+    @GetMapping("/newGame")
+    public String newGame(){
+        boardService.changeBoardSize(boardService.getNumberOfRows(), boardService.getNumberOfColumns());
+        gameService.newGame(boardService.getNumberOfRows(), boardService.getNumberOfColumns());
+        return "redirect:/insert";
+    }
+
     @GetMapping("/loadGame")
     public String displayPage(LoadGameForm loadGameForm){
         return "loadGame";
@@ -41,6 +48,13 @@ public class GameController {
     public String saveGame(){
        gameService.saveGame(boardService.saveGame(gameService.getCurrentGame()));  //tymczasowo!!!!!
 
+        return "redirect:/insert";
+    }
+
+    @GetMapping("/restart")
+    public String restartGame(){
+        boardService.changeBoardSize(boardService.getNumberOfRows(), boardService.getNumberOfColumns());
+        gameService.newGame(boardService.getNumberOfRows(), boardService.getNumberOfColumns());
         return "redirect:/insert";
     }
 }

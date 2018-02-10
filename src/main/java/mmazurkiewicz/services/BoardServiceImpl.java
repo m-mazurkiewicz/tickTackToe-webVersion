@@ -15,6 +15,9 @@ import static java.lang.Long.valueOf;
 @Service
 public class BoardServiceImpl implements BoardService {
 
+    public static final int DEFAULT_NUMBER_OF_ROWS = 3;
+    public static final int DEFAULT_NUMBER_OF_COLUMNS = 3;
+
     private final RowsRepository rowsRepository;
     private final GameService gameService;
     private Mark currentPlayer;
@@ -28,15 +31,15 @@ public class BoardServiceImpl implements BoardService {
     public BoardServiceImpl(RowsRepository rowsRepository, GameService gameService) {
         this.rowsRepository = rowsRepository;
         this.gameService = gameService;
-        this.currentPlayer = Mark.CIRCLE;
-        this.movesCounter = 0;
-        this.numberOfRows = 3;//getBoard().size();
-        this.numberOfColumns = 3;//getBoard().get(1).getColumns().size();
-        this.maxMovesPerGame = numberOfRows * numberOfColumns;
-        this.idOfFirstRow = 1L;
-        this.gameWon = false;
-        //gameService.newGame(numberOfRows, numberOfColumns, );
-        gameService.newGame(3,3); //todo tylko tymczasowe
+//        this.currentPlayer = Mark.CIRCLE;
+//        this.movesCounter = 0;
+        this.numberOfRows = DEFAULT_NUMBER_OF_ROWS;//getBoard().size();
+        this.numberOfColumns = DEFAULT_NUMBER_OF_COLUMNS;//getBoard().get(1).getColumns().size();
+//        this.maxMovesPerGame = numberOfRows * numberOfColumns;
+//        this.idOfFirstRow = 1L;
+//        this.gameWon = false;
+//        //gameService.newGame(numberOfRows, numberOfColumns, );
+//        gameService.newGame(3,3); //todo tylko tymczasowe
     }
 
     @Override
@@ -87,6 +90,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void changeBoardSize(int rows, int columns) {
+        idOfFirstRow = idOfFirstRow == null ? 1L : getLastRowIdFromDatabse() + 1;   //todo: ewentualnie zaimplementować to lepiej
         //rowsRepository.deleteAll();
         ArrayList<Board> board = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
@@ -99,7 +103,6 @@ public class BoardServiceImpl implements BoardService {
         }
         rowsRepository.saveAll(board);
 
-        idOfFirstRow = idOfFirstRow + numberOfRows;   //todo: ewentualnie zaimplementować to lepiej
         numberOfRows = rows;
         numberOfColumns = columns;
         maxMovesPerGame = rows * columns;
@@ -107,7 +110,7 @@ public class BoardServiceImpl implements BoardService {
         movesCounter = 0;
         gameWon = false;
 
-        gameService.newGame(rows, columns); //todo: zmienić to - dać do innej klasy, bo jest tylko tymczasowe
+        //gameService.newGame(rows, columns); //todo: zmienić to - dać do innej klasy, bo jest tylko tymczasowe
     }
 
     @Override
@@ -221,6 +224,13 @@ public class BoardServiceImpl implements BoardService {
         return (columnNumber >= 0 & columnNumber < numberOfColumns);
     }
 
+    private int getLastRowIdFromDatabse(){
+        ArrayList<Board> board = new ArrayList<>();
+        rowsRepository.findAll().iterator().forEachRemaining(board::add);
+        return board.size();
+    }
+
+    @Override
     public boolean checkIfWin(int x, int y) {
         if (checkIfRowHasWinningCombination(x, y)
                 || checkIfColumnHasWinningCombination(x, y)

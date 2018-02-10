@@ -32,7 +32,6 @@ public class GameServiceImpl implements GameService {
         currentGame = (long) games.size() + 1;
 
         gamesRepository.save(game);
-        //gamesRepository.findAll().iterator().forEachRemaining();
     }
 
     @Override

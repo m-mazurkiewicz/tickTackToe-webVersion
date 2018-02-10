@@ -2,6 +2,7 @@ package mmazurkiewicz.controllers;
 
 import mmazurkiewicz.forms.ChangeBoardSizeForm;
 import mmazurkiewicz.services.BoardService;
+import mmazurkiewicz.services.GameService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,12 +38,6 @@ public class ChangeBoardSizeController {
     public String changeSize(@PathVariable int row, @PathVariable int column){
         boardService.changeBoardSize(row, column);
         return "redirect:/";
-    }
-
-    @GetMapping("/restart")
-    public String restartGame(){
-        boardService.changeBoardSize(boardService.getNumberOfRows(), boardService.getNumberOfColumns());
-        return "redirect:/insert";
     }
 }
 
