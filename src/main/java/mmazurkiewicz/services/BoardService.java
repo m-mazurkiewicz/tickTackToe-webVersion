@@ -7,6 +7,8 @@ import mmazurkiewicz.models.Mark;
 import java.util.ArrayList;
 
 public interface BoardService {
+
+    void newBoard();
     ArrayList<Board> getBoard();
     boolean insertSign(int rowNumber, int columnNumber);
     boolean isBoardFilled();

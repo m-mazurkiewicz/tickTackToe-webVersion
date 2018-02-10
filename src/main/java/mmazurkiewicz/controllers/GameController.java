@@ -24,7 +24,7 @@ public class GameController {
 
     @GetMapping("/newGame")
     public String newGame(){
-        boardService.changeBoardSize(boardService.getNumberOfRows(), boardService.getNumberOfColumns());
+        boardService.newBoard();
         gameService.newGame(boardService.getNumberOfRows(), boardService.getNumberOfColumns());
         return "redirect:/insert";
     }
@@ -53,7 +53,7 @@ public class GameController {
 
     @GetMapping("/restart")
     public String restartGame(){
-        boardService.changeBoardSize(boardService.getNumberOfRows(), boardService.getNumberOfColumns());
+        boardService.newBoard();
         gameService.newGame(boardService.getNumberOfRows(), boardService.getNumberOfColumns());
         return "redirect:/insert";
     }

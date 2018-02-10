@@ -43,6 +43,27 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public void newBoard() {
+        idOfFirstRow = idOfFirstRow == null ? 1L : getLastRowIdFromDatabse() + 1;   //todo: ewentualnie zaimplementować to lepiej
+
+        ArrayList<Board> board = new ArrayList<>();
+        for (int i = 0; i < numberOfRows; i++) {
+            ArrayList<Mark> fields = new ArrayList<>();
+            for (int j = 0; j < numberOfColumns; j++) {
+                fields.add(Mark.EMPTY);
+            }
+            Board newRow = new Board(fields);
+            board.add(newRow);
+        }
+        rowsRepository.saveAll(board);
+
+        maxMovesPerGame = numberOfRows * numberOfColumns;
+        currentPlayer = Mark.CIRCLE;
+        movesCounter = 0;
+        gameWon = false;
+    }
+
+    @Override
     public ArrayList<Board> getBoard() {
         ArrayList<Board> board = new ArrayList<>();
         rowsRepository.findAll().iterator().forEachRemaining(board::add);
@@ -90,26 +111,10 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void changeBoardSize(int rows, int columns) {
-        idOfFirstRow = idOfFirstRow == null ? 1L : getLastRowIdFromDatabse() + 1;   //todo: ewentualnie zaimplementować to lepiej
-        //rowsRepository.deleteAll();
-        ArrayList<Board> board = new ArrayList<>();
-        for (int i = 0; i < rows; i++) {
-            ArrayList<Mark> fields = new ArrayList<>();
-            for (int j = 0; j < columns; j++) {
-                fields.add(Mark.EMPTY);
-            }
-            Board newRow = new Board(fields);
-            board.add(newRow);
-        }
-        rowsRepository.saveAll(board);
+
 
         numberOfRows = rows;
         numberOfColumns = columns;
-        maxMovesPerGame = rows * columns;
-        currentPlayer = Mark.CIRCLE;
-        movesCounter = 0;
-        gameWon = false;
-
         //gameService.newGame(rows, columns); //todo: zmienić to - dać do innej klasy, bo jest tylko tymczasowe
     }
 
