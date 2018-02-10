@@ -1,20 +1,22 @@
 package mmazurkiewicz.services;
 
 import mmazurkiewicz.models.Game;
-import mmazurkiewicz.models.Mark;
 import mmazurkiewicz.repositories.GamesRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
 public class GameServiceImpl implements GameService {
 
     private final GamesRepository gamesRepository;
+    //private final BoardService boardService;
     private Long currentGame;
 
     public GameServiceImpl(GamesRepository gamesRepository) {
         this.gamesRepository = gamesRepository;
+       // this.boardService = boardService;
     }
 
     @Override
@@ -24,25 +26,37 @@ public class GameServiceImpl implements GameService {
         game.setNumberOfRows(numberOfRows);
         game.setNumberOfColumns(numberOfColumns);
 
+        ArrayList<Game> games = new ArrayList<>();
+
+        gamesRepository.findAll().iterator().forEachRemaining(games::add);
+        currentGame = (long) games.size();
+
         gamesRepository.save(game);
         //gamesRepository.findAll().iterator().forEachRemaining();
     }
 
     @Override
-    public void saveGame(Long id, int movesCounter, Mark currentPlayer) {
-        Optional<Game> optional = gamesRepository.findById(id);  //todo: zastanowić się, czy nie zrobić tak, żeby nie trzeba było podawać ID, tylko szło z current game
+    public void saveGame(Game game) {
+//        Optional<Game> optional = gamesRepository.findById(currentGame);
+//
+//        if (!optional.isPresent()){
+//            throw new RuntimeException("Field is not present");
+//        }
+
+        //Game savedGame = boardService.saveGame(game);
+
+        gamesRepository.save(game);
+    }
+
+    @Override
+    public Game getCurrentGame() {
+        Optional<Game> optional = gamesRepository.findById(currentGame);
 
         if (!optional.isPresent()){
             throw new RuntimeException("Field is not present");
         }
 
-        Game game = optional.get();
-
-        currentGame = id;
-        game.setCurrentPlayer(currentPlayer);
-        game.setMovesCounter(movesCounter);
-
-        gamesRepository.save(game);
+        return optional.get();
     }
 
     @Override
@@ -52,6 +66,8 @@ public class GameServiceImpl implements GameService {
         if (!optional.isPresent()){
             throw new RuntimeException("Field is not present");
         }
+
+        currentGame = id;
 
         return optional.get();
     }

@@ -16,6 +16,7 @@ public class Game {
     private int movesCounter;
     private Mark currentPlayer;
     private Long idOfFirstRow;
+    private boolean isWon;
 
     public Long getGameNumber() {
         return gameNumber;
@@ -63,5 +64,13 @@ public class Game {
 
     public void setIdOfFirstRow(Long idOfFirstRow) {
         this.idOfFirstRow = idOfFirstRow;
+    }
+
+    public boolean isWon() {
+        return isWon;
+    }
+
+    public void setWon(boolean won) {
+        isWon = won;
     }
 }

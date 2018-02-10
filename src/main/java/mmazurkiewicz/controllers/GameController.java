@@ -33,7 +33,14 @@ public class GameController {
             return "loadGame";
         }
 
-        boardService.loadBoard(gameService.loadGame(loadGameForm.getId()));
+        boardService.loadBoard(gameService.loadGame(loadGameForm.getId())); //todo: zabezpieczyć się przed nieistniejącym id
         return "redirect:/insert";
+    }
+
+    @GetMapping("/saveGame")
+    public String saveGame(){
+        boardService.saveGame(boardService.saveGame(gameService.getCurrentGame()));  //tymczasowo!!!!!
+
+        return "redirect:/";
     }
 }

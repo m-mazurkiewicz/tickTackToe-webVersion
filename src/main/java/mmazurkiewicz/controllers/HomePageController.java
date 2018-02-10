@@ -45,9 +45,13 @@ public class HomePageController {
         return "redirect:/restart";
     }
 
-
     @PostMapping(value="/mainMenu", params="changeDefaultBoardSize")
     public String changeDefaultBoardSize(){
         return "redirect:/changeBoardSize";
+    }
+
+    @PostMapping(value="/mainMenu", params="loadGame")
+    public String loadGame(){
+        return "redirect:/loadGame";
     }
 }

@@ -19,4 +19,5 @@ public interface BoardService {
     int getNumberOfColumns();
     boolean isGameOver();
     void loadBoard(Game game);
+    Game saveGame(Game game);
 }

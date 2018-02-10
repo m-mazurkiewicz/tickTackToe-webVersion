@@ -5,6 +5,7 @@ import mmazurkiewicz.models.Mark;
 
 public interface GameService {
     void newGame(int numberOfRows, int numberOfColumns);
-    void saveGame(Long id, int movesCounter, Mark currentPlayer);
+    void saveGame(Game game);
+    Game getCurrentGame();  //tylko tymczasowo
     Game loadGame(Long id);
 }

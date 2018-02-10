@@ -22,7 +22,7 @@ public class BoardServiceImpl implements BoardService {
     private int movesCounter;
     private int numberOfRows;
     private int numberOfColumns;
-    private int idOfFirstRow;
+    private Long idOfFirstRow;
     private boolean gameWon;
 
     public BoardServiceImpl(RowsRepository rowsRepository, GameService gameService) {
@@ -33,21 +33,30 @@ public class BoardServiceImpl implements BoardService {
         this.numberOfRows = 3;//getBoard().size();
         this.numberOfColumns = 3;//getBoard().get(1).getColumns().size();
         this.maxMovesPerGame = numberOfRows * numberOfColumns;
-        this.idOfFirstRow = 1;
+        this.idOfFirstRow = 1L;
         this.gameWon = false;
         //gameService.newGame(numberOfRows, numberOfColumns, );
+        gameService.newGame(3,3); //todo tylko tymczasowe
     }
 
     @Override
     public ArrayList<Board> getBoard() {
         ArrayList<Board> board = new ArrayList<>();
-        //rowsRepository.findAllById();
         rowsRepository.findAll().iterator().forEachRemaining(board::add);
-        board.stream()
-                .filter(u -> u.getRowNumber() >= idOfFirstRow & u.getRowNumber() <= idOfFirstRow + numberOfRows)
-                .collect(Collectors.toList());
+
+        ArrayList<Board> output = new ArrayList<>();
+
+        for (int i = 1; i <= board.size(); i++){
+            if (i>=idOfFirstRow && i<idOfFirstRow + numberOfRows){
+                output.add(board.get(i-1));
+            }
+        }
+
+//        board.stream()
+//                .filter(u -> u.getRowNumber() >= idOfFirstRow && u.getRowNumber() <= idOfFirstRow + numberOfRows)
+//                .collect(Collectors.toList());
        // board.stream().sorted((a, b) -> b.getRowNumber().compareTo(a.getRowNumber())).sorted().
-        return board;
+        return output;
     }
 
     @Override
@@ -56,7 +65,7 @@ public class BoardServiceImpl implements BoardService {
             return false;
         }
 
-        rowNumber = rowNumber + idOfFirstRow - 1;
+        rowNumber = rowNumber + idOfFirstRow.intValue() - 1;
         Optional<Board> optional = rowsRepository.findById(valueOf(rowNumber));
 
         if (!optional.isPresent()){
@@ -78,7 +87,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void changeBoardSize(int rows, int columns) {
-        rowsRepository.deleteAll();
+        //rowsRepository.deleteAll();
         ArrayList<Board> board = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             ArrayList<Mark> fields = new ArrayList<>();
@@ -97,6 +106,8 @@ public class BoardServiceImpl implements BoardService {
         currentPlayer = Mark.CIRCLE;
         movesCounter = 0;
         gameWon = false;
+
+        gameService.newGame(rows, columns); //todo: zmienić to - dać do innej klasy, bo jest tylko tymczasowe
     }
 
     @Override
@@ -131,13 +142,24 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void loadBoard(Game game) {
-        idOfFirstRow = idOfFirstRow + numberOfRows;   //todo: ewentualnie zaimplementować to lepiej
+        idOfFirstRow = game.getIdOfFirstRow();   //todo: ewentualnie zaimplementować to lepiej
         numberOfRows = game.getNumberOfRows();
         numberOfColumns = game.getNumberOfColumns();
         maxMovesPerGame = numberOfRows * numberOfColumns;
         currentPlayer = game.getCurrentPlayer();
         movesCounter = game.getMovesCounter();
-        gameWon = false;
+        gameWon = game.isWon();
+    }
+
+    @Override
+    public Game saveGame(Game game) {
+        game.setMovesCounter(movesCounter);
+        game.setCurrentPlayer(currentPlayer);
+        game.setNumberOfRows(numberOfRows);
+        game.setNumberOfColumns(numberOfColumns);
+        game.setIdOfFirstRow(idOfFirstRow);
+        game.setWon(gameWon);
+        return game;
     }
 
     private boolean isFieldEmpty(int rowNumber, int columnNumber){
@@ -145,7 +167,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     private boolean isPlayerMarkEqualToInserted(int rowNumber, int columnNumber, Mark player) {
-        rowNumber = rowNumber + idOfFirstRow - 1;
+        rowNumber = rowNumber + idOfFirstRow.intValue() - 1;
         Optional<Board> optional = rowsRepository.findById(valueOf(rowNumber));
 
         if (!optional.isPresent()){
