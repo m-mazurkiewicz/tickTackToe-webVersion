@@ -39,8 +39,8 @@ public class GameController {
 
     @GetMapping("/saveGame")
     public String saveGame(){
-        boardService.saveGame(boardService.saveGame(gameService.getCurrentGame()));  //tymczasowo!!!!!
+       gameService.saveGame(boardService.saveGame(gameService.getCurrentGame()));  //tymczasowo!!!!!
 
-        return "redirect:/";
+        return "redirect:/insert";
     }
 }

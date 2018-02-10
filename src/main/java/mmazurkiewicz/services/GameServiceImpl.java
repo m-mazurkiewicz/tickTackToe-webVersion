@@ -29,7 +29,7 @@ public class GameServiceImpl implements GameService {
         ArrayList<Game> games = new ArrayList<>();
 
         gamesRepository.findAll().iterator().forEachRemaining(games::add);
-        currentGame = (long) games.size();
+        currentGame = (long) games.size() + 1;
 
         gamesRepository.save(game);
         //gamesRepository.findAll().iterator().forEachRemaining();
