@@ -6,7 +6,6 @@ import mmazurkiewicz.services.GameService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -40,14 +39,13 @@ public class GameController {
             return "loadGame";
         }
 
-        boardService.loadBoard(gameService.loadGame(loadGameForm.getId())); //todo: zabezpieczyć się przed nieistniejącym id
+        gameService.loadGame(loadGameForm.getId()); //todo: zabezpieczyć się przed nieistniejącym id
         return "redirect:/insert";
     }
 
     @GetMapping("/saveGame")
     public String saveGame(){
-       gameService.saveGame(boardService.saveGame(gameService.getCurrentGame()));  //tymczasowo!!!!!
-
+        gameService.saveGame();
         return "redirect:/insert";
     }
 

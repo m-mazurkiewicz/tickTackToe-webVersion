@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.lang.Long.valueOf;
 
@@ -19,7 +18,6 @@ public class BoardServiceImpl implements BoardService {
     public static final int DEFAULT_NUMBER_OF_COLUMNS = 3;
 
     private final RowsRepository rowsRepository;
-    private final GameService gameService;
     private Mark currentPlayer;
     private int maxMovesPerGame;
     private int movesCounter;
@@ -28,23 +26,15 @@ public class BoardServiceImpl implements BoardService {
     private Long idOfFirstRow;
     private boolean gameWon;
 
-    public BoardServiceImpl(RowsRepository rowsRepository, GameService gameService) {
+    public BoardServiceImpl(RowsRepository rowsRepository) {
         this.rowsRepository = rowsRepository;
-        this.gameService = gameService;
-//        this.currentPlayer = Mark.CIRCLE;
-//        this.movesCounter = 0;
-        this.numberOfRows = DEFAULT_NUMBER_OF_ROWS;//getBoard().size();
-        this.numberOfColumns = DEFAULT_NUMBER_OF_COLUMNS;//getBoard().get(1).getColumns().size();
-//        this.maxMovesPerGame = numberOfRows * numberOfColumns;
-//        this.idOfFirstRow = 1L;
-//        this.gameWon = false;
-//        //gameService.newGame(numberOfRows, numberOfColumns, );
-//        gameService.newGame(3,3); //todo tylko tymczasowe
+        this.numberOfRows = DEFAULT_NUMBER_OF_ROWS;
+        this.numberOfColumns = DEFAULT_NUMBER_OF_COLUMNS;
     }
 
     @Override
     public void newBoard() {
-        idOfFirstRow = idOfFirstRow == null ? 1L : getLastRowIdFromDatabse() + 1;   //todo: ewentualnie zaimplementować to lepiej
+        idOfFirstRow = idOfFirstRow == null ? 1L : getLastRowIdFromDatabase() + 1;   //todo: ewentualnie zaimplementować to lepiej
 
         ArrayList<Board> board = new ArrayList<>();
         for (int i = 0; i < numberOfRows; i++) {
@@ -111,11 +101,8 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void changeBoardSize(int rows, int columns) {
-
-
         numberOfRows = rows;
         numberOfColumns = columns;
-        //gameService.newGame(rows, columns); //todo: zmienić to - dać do innej klasy, bo jest tylko tymczasowe
     }
 
     @Override
@@ -229,7 +216,7 @@ public class BoardServiceImpl implements BoardService {
         return (columnNumber >= 0 & columnNumber < numberOfColumns);
     }
 
-    private int getLastRowIdFromDatabse(){
+    private int getLastRowIdFromDatabase(){
         ArrayList<Board> board = new ArrayList<>();
         rowsRepository.findAll().iterator().forEachRemaining(board::add);
         return board.size();

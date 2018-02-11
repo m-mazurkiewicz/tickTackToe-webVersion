@@ -11,12 +11,12 @@ import java.util.Optional;
 public class GameServiceImpl implements GameService {
 
     private final GamesRepository gamesRepository;
-    //private final BoardService boardService;
+    private final BoardService boardService;
     private Long currentGame;
 
-    public GameServiceImpl(GamesRepository gamesRepository) {
+    public GameServiceImpl(GamesRepository gamesRepository, BoardService boardService) {
         this.gamesRepository = gamesRepository;
-       // this.boardService = boardService;
+        this.boardService = boardService;
     }
 
     @Override
@@ -35,31 +35,20 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void saveGame(Game game) {
-//        Optional<Game> optional = gamesRepository.findById(currentGame);
-//
-//        if (!optional.isPresent()){
-//            throw new RuntimeException("Field is not present");
-//        }
-
-        //Game savedGame = boardService.saveGame(game);
-
-        gamesRepository.save(game);
-    }
-
-    @Override
-    public Game getCurrentGame() {
+    public void saveGame() {
         Optional<Game> optional = gamesRepository.findById(currentGame);
 
         if (!optional.isPresent()){
             throw new RuntimeException("Field is not present");
         }
 
-        return optional.get();
+        Game savedGame = boardService.saveGame(optional.get());
+
+        gamesRepository.save(savedGame);
     }
 
     @Override
-    public Game loadGame(Long id) {
+    public void loadGame(Long id) {
         Optional<Game> optional = gamesRepository.findById(id);
 
         if (!optional.isPresent()){
@@ -67,7 +56,6 @@ public class GameServiceImpl implements GameService {
         }
 
         currentGame = id;
-
-        return optional.get();
+        boardService.loadBoard(optional.get());
     }
 }
